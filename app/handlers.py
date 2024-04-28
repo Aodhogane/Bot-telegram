@@ -44,7 +44,6 @@ async def Esponyat_No_4(callback: CallbackQuery):
     await callback.message.answer('Вы выбрвли "Экспонат №4"')
 
 
-
 #Зал №2
 @router.message(F.text == 'Зал №2')
 async def Hall_No_2(message: Message):

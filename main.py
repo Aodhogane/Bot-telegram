@@ -1,7 +1,10 @@
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher, F
 from Token import Token
 from app.handlers import router
+
+logging.basicConfig(level=logging.INFO)
 
 async def main():
     bot = Bot(token=Token)
