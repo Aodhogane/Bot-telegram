@@ -1,14 +1,10 @@
 import os
 import app.keyboards as kb
 
-from aiogram import F 
+from aiogram import F
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import Command
 from gtts import gTTS
 from aiogram.types.input_file import FSInputFile
-
-from app import bot as bt
-from aiogram.types import FSInputFile
 
 from app import router
 
