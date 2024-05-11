@@ -1,28 +1,21 @@
-from email import message
-import aiogram
-from io import BytesIO
-from aiogram import F, Router, Bot, Dispatcher, types
-from aiogram.types import Message, CallbackQuery
-from aiogram.filters import CommandStart, Command
-from gtts import gTTS
 import os
 import app.keyboards as kb
+
+from aiogram import F 
+from aiogram.types import Message, CallbackQuery
+from aiogram.filters import Command
+from gtts import gTTS
 from aiogram.types.input_file import FSInputFile
 
 from app import bot as bt
-from aiogram.types import FSInputFile,BufferedInputFile
+from aiogram.types import FSInputFile
 
 from app import router
-@router.message(Command('старт'))
-async def cmd_start(message: Message):
-    await message.answer('Добро пожаловать в наш музей!' 
-                         'Выберите зал в котором вы хотите начать экскрсию.', 
-                         reply_markup=kb.main)
 
-@router.message(Command('помощь'))
-async def cmd_help(message: Message):
-    await message.answer('Просто введите номер экспонат, которй вас интерисует'
-                         'Номер экспоната будет предоставлен в виде бумажки с номером рядом с экспонатом.')
+@router.message(F.text == 'Помощь')
+async def main(message: Message):
+    await message.answer('Введите номер экспонат, которй вас интерисует'
+                         'Номер экспоната будет предоставлен в виде бумажки с номером рядом с экспонатом')
 
 
 #Зал №1

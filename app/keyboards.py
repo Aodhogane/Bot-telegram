@@ -3,11 +3,11 @@ from aiogram.types import (ReplyKeyboardMarkup, KeyboardButton,
 
 main = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Зал №1')],
                                      [KeyboardButton(text='Зал №2')],
-                                     [KeyboardButton(text='Зал №3'),
-                                     KeyboardButton(text='Зал №4')]],
+                                     [KeyboardButton(text='Зал №3')],
+                                     [KeyboardButton(text='Зал №4')],
+                                     [KeyboardButton(text='Помощь')]],
                             resize_keyboard=True,   
                             input_field_placeholder='Выберите зал...')
-
 
 Hall_No_1 = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Эеспонят №1', callback_data='Esponyat No.1')],
                                                   [InlineKeyboardButton(text='Эеспонят №2', callback_data='Esponyat No.2')],
