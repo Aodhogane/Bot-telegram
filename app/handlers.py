@@ -68,7 +68,7 @@ async def Esponyat_No_4(callback: CallbackQuery):
     await callback.message.answer_voice(voice=file,caption='Экспонат №4. Учебник который был написан великим учённым нашего времени.')
     os.remove(f"{callback.from_user.id}.mp3")
 
-#Зал №2
+# #Зал №2
 # @router.message(F.text == 'Зал №2')
 # async def Hall_No_2(message: Message):
 #     await message.answer('Выберите номер экспоната, которй вас интересует в "Зал №2"', reply_markup=kb.Hall_No_2)
