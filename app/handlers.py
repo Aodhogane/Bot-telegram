@@ -1,6 +1,7 @@
 import os
+from app.keyboards import main as main_kb
 import app.keyboards as kb
-
+from app import bot
 from aiogram import F
 from aiogram.types import Message, CallbackQuery
 from gtts import gTTS
@@ -8,11 +9,14 @@ from aiogram.types.input_file import FSInputFile
 
 from app import router
 
+@router.message(F.text=="/start")
+async def start(message:Message):
+    await message.answer('Введите номер экспонат, которй вас интерисует'
+                         'Номер экспоната будет предоставлен в виде бумажки с номером рядом с экспонатом',reply_markup=main_kb)
+
 @router.message(F.text == 'Помощь')
 async def main(message: Message):
-    await message.answer('Введите номер экспонат, которй вас интерисует'
-                         'Номер экспоната будет предоставлен в виде бумажки с номером рядом с экспонатом')
-
+    await message.answer('Добрый день. Я помощницы Лулу. Если вас что-то интереует, то просто подойдите к работнику музея и сросите, что вас интерсует')
 
 #Зал №1
 @router.message(F.text == 'Зал №1')
@@ -23,35 +27,35 @@ async def Hall_No_1(message: Message):
 async def Esponyat_No_1(callback: CallbackQuery):
     await callback.answer('Вы выбрали экспонат')
     
-    tts=gTTS('Экспонат №1. Это картина великого императора России, Петра первого.'
-                                  'Выдающийся человек и тот самый, который прорубил окно в Евроау,'
-                                  'и основал кораблестроение в России!',lang="ru",slow=False)
+    tts=gTTS("Экспонат №1. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
+             "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года." , lang="ru",slow=False)
     tts.save(f"{callback.from_user.id}.mp3")
     file=FSInputFile(f"{callback.from_user.id}.mp3")
-    await callback.message.answer_voice(voice=file,caption='Первый экспонат. Это картина великого имера России, Петра I.'
-                                  'Выдающийся человек и тот самый человек, который прорубил окно в Евроау,'
-                                  'и основал кораблестроение в России!')
+    await callback.message.answer_voice(voice=file,caption="Экспонат №1. Картина Пётра Первого Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
+             "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.")
     os.remove(f"{callback.from_user.id}.mp3")
 
 @router.callback_query(F.data == 'Esponyat No.2')
 async def Esponyat_No_2(callback: CallbackQuery):
     await callback.answer('Вы выбрвли экспонат')
 
-    tts=gTTS('"Экспонат №2. Это доспехи великого полководца Англии 1843 года.',lang="ru",slow=False)
+    tts=gTTS('"Экспонат №2. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.',lang="ru",slow=False)
     tts.save(f"{callback.from_user.id}.mp3")
     file=FSInputFile(f"{callback.from_user.id}.mp3")
 
-    await callback.message.answer_voice(voice=file, caption='Второй экспонат. Это доспехи великого полководца Англии 1843 года.')
+    await callback.message.answer_voice(voice=file, caption='Второй экспонат. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
     os.remove(f"{callback.from_user.id}.mp3")
 
 @router.callback_query(F.data == 'Esponyat No.3')
 async def Esponyat_No_3(callback: CallbackQuery):
     await callback.answer('Вы выбрвли экспонат')
 
-    tts=gTTS('"Экспонат №3. Карта России, 1764 года.',lang="ru",slow=False)
+    tts=gTTS("Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
+             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.",lang="ru",slow=False)
     tts.save(f"{callback.from_user.id}.mp3")
     file=FSInputFile(f"{callback.from_user.id}.mp3")
-    await callback.message.answer_voice(voice=file,caption='Третий экспонат. Карта России, 1764 года.')
+    await callback.message.answer_voice(voice=file,caption="Третий экспонат. Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
+             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.")
     os.remove(f"{callback.from_user.id}.mp3")
 
 @router.callback_query(F.data == 'Esponyat No.4')
