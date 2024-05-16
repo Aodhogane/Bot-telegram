@@ -4,8 +4,8 @@ from aiogram.types import (ReplyKeyboardMarkup, KeyboardButton,
 main = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Зал №1')],
                                      [KeyboardButton(text='Зал №2')],
                                      [KeyboardButton(text='Зал №3')],
-                                    [KeyboardButton(text='Зал №4')],
-                                     #[KeyboardButton(text='Помощь')],
+                                     [KeyboardButton(text='Зал №4')],
+                                     [KeyboardButton(text='Помощь')]
                                      ],
                             resize_keyboard=True,   
                             input_field_placeholder='Выберите зал...')
