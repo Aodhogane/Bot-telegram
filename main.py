@@ -32,19 +32,21 @@ def Hall_No_1(message):
         try:
             bot.send_voice(message.chat.id, file, caption="Экспонат №1, Зал №1. Картина Пётра Первого Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
              "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.")
+            return
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №2':
         tts=gTTS('"Экспонат №2, Зал №1. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.',lang="ru",slow=False)
         tts.save(f"{message.from_user.id}.mp3")
         file = open(f"{message.from_user.id}.mp3", 'rb')
         try:
-            bot.send_voice(message.chat.id, file, caption='Экспонат №2, Зал №1. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
+           bot.send_voice(message.chat.id, file, caption='Экспонат №2, Зал №1. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
+           return
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №3':
         tts=gTTS("Экспонат №3, Зал №1. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
@@ -54,9 +56,11 @@ def Hall_No_1(message):
         try:
             bot.send_voice(message.chat.id, file,caption="Экспонат №3, Зал №1. Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
              "для лошади инкрустирована дорогим сапфиром и покрыт серебром.")
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №4':
         tts=gTTS('Экспонат №4, Зал №1. Учебник который был написан великил учёным нашего времени.',lang="ru",slow=False)
@@ -64,9 +68,11 @@ def Hall_No_1(message):
         file = open(f"{message.from_user.id}.mp3", 'rb')
         try:
             bot.send_voice(message.chat.id, file,caption='Экспонат №4, Зал №1. Учебник который был написан великим учённым нашего времени.')
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")  
+            os.remove(f"{message.from_user.id}.mp3")
 
     if message.text == 'Зал №2':
         keyboard = types.ReplyKeyboardMarkup()
@@ -83,9 +89,11 @@ def Hall_No_1(message):
         try:
             bot.send_voice(message.chat.id, file, caption="Экспонат №1, Зал №2. Картина Пётра Первого Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
              "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.")
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №2':
         tts=gTTS('"Экспонат №2, Зал №2. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.',lang="ru",slow=False)
@@ -93,9 +101,11 @@ def Hall_No_1(message):
         file = open(f"{message.from_user.id}.mp3", 'rb')
         try:
             bot.send_voice(message.chat.id, file, caption='Экспонат №2, Зал №2. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №3':
         tts=gTTS("Экспонат №3, Зал №2. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
@@ -105,9 +115,11 @@ def Hall_No_1(message):
         try:
             bot.send_voice(message.chat.id, file,caption="Экспонат №3, Зал №2. Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
              "для лошади инкрустирована дорогим сапфиром и покрыт серебром.")
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")
+            os.remove(f"{message.from_user.id}.mp3")
 
     elif message.text == 'Экспонат №4':
         tts=gTTS('Экспонат №4, Зал №2. Учебник который был написан великил учёным нашего времени.',lang="ru",slow=False)
@@ -115,9 +127,11 @@ def Hall_No_1(message):
         file = open(f"{message.from_user.id}.mp3", 'rb')
         try:
             bot.send_voice(message.chat.id, file,caption='Экспонат №4, Зал №2. Учебник который был написан великим учённым нашего времени.')
+            return
+
         finally:
             file.close()
-        os.remove(f"{message.from_user.id}.mp3")  
+            os.remove(f"{message.from_user.id}.mp3")
 
 
 bot.stop_polling()
