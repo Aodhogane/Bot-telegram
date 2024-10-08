@@ -16,14 +16,19 @@ def start(message):
 
 #Зал №1
 @bot.message_handler(content_types=['text'])
-def Hall_No_1(message):
+def Hall(message):
+    
     if message.text == 'Зал №1':
         keyboard = types.ReplyKeyboardMarkup()
         keyboard.add(types.KeyboardButton('Экспонат №1'))
         keyboard.add(types.KeyboardButton('Экспонат №2'))
         keyboard.add(types.KeyboardButton('Экспонат №3'))
         keyboard.add(types.KeyboardButton('Экспонат №4'))
+        keyboard.add(types.KeyboardButton('Назад'))
         bot.send_message(message.chat.id, 'Выберите номер экспоната, которй вас интересует в "Зал №1"', reply_markup=keyboard)
+    
+    elif message.text == 'Назад':
+        start(message)
 
     elif message.text == 'Экспонат №1':
         tts=gTTS("Экспонат №1, Зал №1. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.", lang="ru", slow=False)
@@ -74,13 +79,18 @@ def Hall_No_1(message):
             file.close()
             os.remove(f"{message.from_user.id}.mp3")
 
+#Зал №2
     if message.text == 'Зал №2':
         keyboard = types.ReplyKeyboardMarkup()
         keyboard.add(types.KeyboardButton('Экспонат №1'))
         keyboard.add(types.KeyboardButton('Экспонат №2'))
         keyboard.add(types.KeyboardButton('Экспонат №3'))
         keyboard.add(types.KeyboardButton('Экспонат №4'))
+        keyboard.add(types.KeyboardButton('Назад'))
         bot.send_message(message.chat.id, 'Выберите номер экспоната, которй вас интересует в "Зал №2"', reply_markup=keyboard)
+
+    elif message.text == 'Назад':
+        start(message)
 
     elif message.text == 'Экспонат №1':
         tts=gTTS("Экспонат №1, Зал №2. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.", lang="ru", slow=False)
