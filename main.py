@@ -6,143 +6,76 @@ from gtts import gTTS
 
 bot = telebot.TeleBot(Token)
 
-#Старт
+# Словарь для отслеживания состояния выбранного зала для каждого пользователя
+user_state = {}
+
+# Старт
 @bot.message_handler(commands=['start'])
 def start(message):
     keyboard = types.ReplyKeyboardMarkup()
     keyboard.add(types.KeyboardButton('Зал №1'))
     keyboard.add(types.KeyboardButton('Зал №2'))
-    bot.send_message(message.chat.id, 'Введите номер экспонат, которй вас интерисует', reply_markup=keyboard)
+    bot.send_message(message.chat.id, 'Введите номер экспоната, который вас интересует', reply_markup=keyboard)
 
-#Зал №1
+# Обработка сообщений
 @bot.message_handler(content_types=['text'])
-def Hall(message):
+def hall_selection(message):
+    global user_state
     
+    # Обработка выбора зала
     if message.text == 'Зал №1':
+        user_state[message.chat.id] = 'Зал №1'
         keyboard = types.ReplyKeyboardMarkup()
         keyboard.add(types.KeyboardButton('Экспонат №1'))
         keyboard.add(types.KeyboardButton('Экспонат №2'))
         keyboard.add(types.KeyboardButton('Экспонат №3'))
         keyboard.add(types.KeyboardButton('Экспонат №4'))
         keyboard.add(types.KeyboardButton('Назад'))
-        bot.send_message(message.chat.id, 'Выберите номер экспоната, которй вас интересует в "Зал №1"', reply_markup=keyboard)
-    
-    elif message.text == 'Назад':
-        start(message)
+        bot.send_message(message.chat.id, 'Выберите номер экспоната, который вас интересует в "Зал №1"', reply_markup=keyboard)
 
-    elif message.text == 'Экспонат №1':
-        tts=gTTS("Экспонат №1, Зал №1. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.", lang="ru", slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file, caption="Экспонат №1, Зал №1. Картина Пётра Первого Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
-             "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.")
-            return
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-    elif message.text == 'Экспонат №2':
-        tts=gTTS('"Экспонат №2, Зал №1. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.',lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-           bot.send_voice(message.chat.id, file, caption='Экспонат №2, Зал №1. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
-           return
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-    elif message.text == 'Экспонат №3':
-        tts=gTTS("Экспонат №3, Зал №1. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
-             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.",lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file,caption="Экспонат №3, Зал №1. Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
-             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.")
-            return
-
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-    elif message.text == 'Экспонат №4':
-        tts=gTTS('Экспонат №4, Зал №1. Учебник который был написан великил учёным нашего времени.',lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file,caption='Экспонат №4, Зал №1. Учебник который был написан великим учённым нашего времени.')
-            return
-
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-#Зал №2
-    if message.text == 'Зал №2':
+    elif message.text == 'Зал №2':
+        user_state[message.chat.id] = 'Зал №2'
         keyboard = types.ReplyKeyboardMarkup()
         keyboard.add(types.KeyboardButton('Экспонат №1'))
         keyboard.add(types.KeyboardButton('Экспонат №2'))
         keyboard.add(types.KeyboardButton('Экспонат №3'))
         keyboard.add(types.KeyboardButton('Экспонат №4'))
         keyboard.add(types.KeyboardButton('Назад'))
-        bot.send_message(message.chat.id, 'Выберите номер экспоната, которй вас интересует в "Зал №2"', reply_markup=keyboard)
+        bot.send_message(message.chat.id, 'Выберите номер экспоната, который вас интересует в "Зал №2"', reply_markup=keyboard)
 
     elif message.text == 'Назад':
         start(message)
 
-    elif message.text == 'Экспонат №1':
-        tts=gTTS("Экспонат №1, Зал №2. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.", lang="ru", slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file, caption="Экспонат №1, Зал №2. Картина Пётра Первого Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в"
-             "Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.")
-            return
+    # Обработка выбора экспонатов
+    elif message.text.startswith('Экспонат №'):
+        current_hall = user_state.get(message.chat.id)
+        if current_hall:
+            handle_exhibit(message, current_hall)
 
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
+def handle_exhibit(message, hall):
+    exhibit_info = {
+        'Зал №1': {
+            'Экспонат №1': "Экспонат №1, Зал №1. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.",
+            'Экспонат №2': "Экспонат №2, Зал №1. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.",
+            'Экспонат №3': "Экспонат №3, Зал №1. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение для лошади, инкрустированное дорогим сапфиром и покрытое серебром.",
+            'Экспонат №4': "Экспонат №4, Зал №1. Учебник, который был написан великим учёным нашего времени."
+        },
+        'Зал №2': {
+            'Экспонат №1': "Экспонат №1, Зал №2. Картина Пётра I Алексе́евича, Пётр Вели́кий родился 30 мая 1672, Москва, умер 28 января 1725, в Санкт-Петербурге — царь всея Руси с 1682 года, первый император Всероссийский с 1721 года.",
+            'Экспонат №2': "Экспонат №2, Зал №2. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.",
+            'Экспонат №3': "Экспонат №3, Зал №2. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение для лошади, инкрустированное дорогим сапфиром и покрытое серебром.",
+            'Экспонат №4': "Экспонат №4, Зал №2. Учебник, который был написан великим учёным нашего времени."
+        }
+    }
 
-    elif message.text == 'Экспонат №2':
-        tts=gTTS('"Экспонат №2, Зал №2. Иван Четвёртый Васильевич родился 1530 умер 1584 — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси с 1547 года.',lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file, caption='Экспонат №2, Зал №2. Иван IV Васильевич (1530–1584) — государь, царь и великий князь всея Руси с 1533 года, первый венчанный царь всея Руси (с 1547 года).')
-            return
+    exhibit_text = exhibit_info[hall][message.text]
+    tts = gTTS(exhibit_text, lang="ru", slow=False)
+    tts.save(f"{message.from_user.id}.mp3")
+    file = open(f"{message.from_user.id}.mp3", 'rb')
+    try:
+        bot.send_voice(message.chat.id, file, caption=exhibit_text)
+    finally:
+        file.close()
+        os.remove(f"{message.from_user.id}.mp3")
 
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-    elif message.text == 'Экспонат №3':
-        tts=gTTS("Экспонат №3, Зал №2. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
-             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.",lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file,caption="Экспонат №3, Зал №2. Экспонат №3. Подарок турецкого султана Абдул-Хамида Первого, императрице Екатерине II в 1775 году. Представляет собой украшение" 
-             "для лошади инкрустирована дорогим сапфиром и покрыт серебром.")
-            return
-
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-    elif message.text == 'Экспонат №4':
-        tts=gTTS('Экспонат №4, Зал №2. Учебник который был написан великил учёным нашего времени.',lang="ru",slow=False)
-        tts.save(f"{message.from_user.id}.mp3")
-        file = open(f"{message.from_user.id}.mp3", 'rb')
-        try:
-            bot.send_voice(message.chat.id, file,caption='Экспонат №4, Зал №2. Учебник который был написан великим учённым нашего времени.')
-            return
-
-        finally:
-            file.close()
-            os.remove(f"{message.from_user.id}.mp3")
-
-
-bot.stop_polling()
 bot.polling(none_stop=True)
