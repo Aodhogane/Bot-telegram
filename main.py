@@ -6,11 +6,13 @@ from gtts import gTTS
 
 bot = telebot.TeleBot(Token)
 
-# Словарь для отслеживания состояния выбранного зала для каждого пользователя
+#Словарь для отслеживания выбранного зала
 user_state = {}
-processing_exhibit = {}  # Новый словарь для отслеживания состояния обработки экспоната
 
-# Старт
+#Словарь для отслеживания состояния обработки экспоната
+processing_exhibit = {}
+
+#Старт
 @bot.message_handler(commands=['start'])
 def start(message):
     keyboard = types.ReplyKeyboardMarkup()
@@ -19,7 +21,7 @@ def start(message):
     keyboard.add(types.KeyboardButton('Зал №3'))
     bot.send_message(message.chat.id, 'Введите номер экспоната, который вас интересует', reply_markup=keyboard)
 
-# Обработка сообщений
+#Обработка сообщений
 @bot.message_handler(content_types=['text'])
 def hall_selection(message):
     global user_state
@@ -38,14 +40,20 @@ def hall_selection(message):
     elif message.text == 'Назад':
         start(message)
 
-    # Обработка выбора экспонатов
-    elif message.text.startswith('Экспонат №'):
+    #Обработка выбора экспонатов
+    elif message.text.startswith('Экспонат №'): #Проверка, начинается ли текст сообщения с 'Экспонат №' 
+        #Получаем информацию о текущем зале, выбранном пользователем из словаря
         current_hall = user_state.get(message.chat.id)
+        #Проверка на то, что был ли установлен зал
         if current_hall:
+            #Проверка на нахождение пользователя в процессе обработке
             if processing_exhibit.get(message.chat.id, False):
+                #Если да, то отправляет это сообщение
                 bot.send_message(message.chat.id, 'Пожалуйста, дождитесь обработки вашего выбора экспоната.')
             else:
-                processing_exhibit[message.chat.id] = True  # Устанавливаем флаг обработки
+                #Если пользователь не в процессе обработки, то ставит флаг в True
+                processing_exhibit[message.chat.id] = True
+                 #Вызываем функцию handle_exhibit для обработки информации о выбранном экспонате
                 handle_exhibit(message, current_hall)
 
 def handle_exhibit(message, hall):
@@ -80,7 +88,7 @@ def handle_exhibit(message, hall):
         file.close()
         os.remove(f"{message.from_user.id}.mp3")
     
-    # Сбрасываем флаг обработки после завершения
+    #Сбрасываем флаг обработки после завершения
     processing_exhibit[message.chat.id] = False
 
 bot.polling(none_stop=True)
