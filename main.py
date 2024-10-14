@@ -41,9 +41,12 @@ def hall_selection(message):
         start(message)
 
     #Обработка выбора экспонатов
-    elif message.text.startswith('Экспонат №'): #Проверка, начинается ли текст сообщения с 'Экспонат №' 
+    #Проверка, начинается ли текст сообщения с 'Экспонат №' 
+    elif message.text.startswith('Экспонат №'): 
+
         #Получаем информацию о текущем зале, выбранном пользователем из словаря
         current_hall = user_state.get(message.chat.id)
+        
         #Проверка на то, что был ли установлен зал
         if current_hall:
             #Проверка на нахождение пользователя в процессе обработке
@@ -78,14 +81,27 @@ def handle_exhibit(message, hall):
         }
     }
 
+    #Извлекаем текст описания экспоната из словаря exhibit_info, 
+    #используя номер зала и текс экспоната
     exhibit_text = exhibit_info[hall][message.text]
+
+    #Создаем объект gTTS для преобразования текста в голос
     tts = gTTS(exhibit_text, lang="ru", slow=False)
+
+    #Сохраняем сгенерированный голосовой файл в формате MP3
     tts.save(f"{message.from_user.id}.mp3")
+
+    #Открываем созданный MP3 файл в режиме чтения
     file = open(f"{message.from_user.id}.mp3", 'rb')
     try:
+        #Отправляем голосовое сообщение в чат пользователя
+        #В качестве подписи добавляем текст описания экспоната
         bot.send_voice(message.chat.id, file, caption=exhibit_text)
     finally:
+        #Закрываем файл для освобождения ресурсов
         file.close()
+
+        #Удаляем временный MP3 файл после его отправки
         os.remove(f"{message.from_user.id}.mp3")
     
     #Сбрасываем флаг обработки после завершения
